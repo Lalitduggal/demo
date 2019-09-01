@@ -22,7 +22,7 @@ create IAM user with programmatic access only: demouser
 add user to group: demogroup
 FYI the below is access and secret is for example ONLY
 make a note of access key id: AKIATNG2U5D66OSF7NUP
-make a note of secret access key: YT9C2IMiSITdZCupuDbPJo7/T7md7MFdF06IJHBC
+make a note of secret access key: YT9C2IMiSITdZCupuDbPJo712T7md7MFdF06IJHBC
 
 
 # Initial Source Code
@@ -142,7 +142,7 @@ aws cloudformation deploy --template-file C:\Users\lalitduggal\Desktop\myobdemo\
 
 
 # test the api
-From your laptop browser:  https://zh2lxakbsi.execute-api.us-east-1.amazonaws.com/Prod/hello
+From your laptop browser:  https://rjviq5w9g9.execute-api.us-east-1.amazonaws.com/Prod/hello
 
 
 
@@ -154,7 +154,7 @@ From your laptop browser:  https://zh2lxakbsi.execute-api.us-east-1.amazonaws.co
 login to aws console:
 select AWS Code Build Service
 create a code build project: demobuild
-a role is also created by default: arn:aws:iam::2345667867133:role/service-role/codebuild-demobuild-service-role
+a role is also created by default: arn:aws:iam::2322667867133:role/service-role/codebuild-demobuild-service-role
 grant below policies to this role using IAM AWS Console: 
 s3 full access: AmazonS3FullAccess
 api gateway full admin access: AmazonAPIGatewayAdministrator
@@ -167,7 +167,7 @@ cloudformation full access: AWSCloudFormationFullAccess
 login to aws console
 select AWS Code Pipeline Service
 codepipeline: demopipe
-role is auto created: AWSCodePipelineServiceRole-us-east-1-demopipe: arn:aws:iam::2345667867133:role/service-role/AWSCodePipelineServiceRole-us-east-1-demopipe
+role is auto created: AWSCodePipelineServiceRole-us-east-1-demopipe: arn:aws:iam::2322667867133:role/service-role/AWSCodePipelineServiceRole-us-east-1-demopipe
 select source code provider: github
 connect to github
 repository: Lalitduggal/demo
