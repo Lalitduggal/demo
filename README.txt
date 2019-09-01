@@ -1,5 +1,6 @@
-login to aws account using browser on your laptop:
+Login to aws account using browser on your laptop:
 Once logged in to the aws console:  
+
 # Region selection
 select north virginia region
 	
@@ -16,72 +17,70 @@ cloudformation full access: AWSCloudFormationFullAccess
 select IAM as service:
 create IAM user with programmatic access only: demouser
 add user to group: demogroup
-# FYI the below is access and secret is for example ONLY
+FYI the below is access and secret is for example ONLY
 make a note of access key id: AKIATNG2U5D66OSF7NUP
 make a note of secret access key: YT9C2IMiSITdZCupuDbPJo7/T7md7MFdF06IJHBC
 
 # Initial Source Code
 on your laptop:
 create directory: demo
+
 # samtemplate.yaml will be the sam template for creating a lambda function which will be triggered (event) by an API Gateway with resource as hello and method as GET
 create file: samtemplate.yaml
 		
-		AWSTemplateFormatVersion: 2010-09-09
-		Description: This will create a lambda function and an api event which will trigger it. Also, lambda execution role
+AWSTemplateFormatVersion: 2010-09-09
+Description: This will create a lambda function and an api event which will trigger it. Also, lambda execution role
 
-		Transform: 'AWS::Serverless-2016-10-31'
-		Resources:
-		  demofunction:
-			Type: AWS::Serverless::Function
+Transform: 'AWS::Serverless-2016-10-31'
+Resources:
+  demofunction:
+	Type: AWS::Serverless::Function
+	Properties:
+	  Description: This is just a hello world lambda with api integration
+	  Handler: lambdademofunction.lambda_handler
+	  Runtime: python3.7
+	  CodeUri: './lambdademofunction.py'
+	  Events:
+		demoapi:
+			# Define an API Gateway endpoint that responds to HTTP GET at /hello
+			Type: Api
 			Properties:
-			  Description: This is just a hello world lambda with api integration
-			  Handler: lambdademofunction.lambda_handler
-			  Runtime: python3.7
-			  CodeUri: './lambdademofunction.py'
-			  Events:
-				demoapi:
-					# Define an API Gateway endpoint that responds to HTTP GET at /hello
-					Type: Api
-					Properties:
-					  Path: /hello
-					  Method: GET
-			  MemorySize: 128
-			  Timeout: 15
-			  Policies:
-			  Tags:
-				Name: demo
-		
-
+			  Path: /hello
+			  Method: GET
+	  MemorySize: 128
+	  Timeout: 15
+	  Policies:
+	  Tags:
+		Name: demo
 		
 # buildspec.yaml will be used by AWS Code Build Service
 create file: buildspec.yaml
 		
-		version: 0.2
-		phases:
-		  install:
-			runtime-versions:
-			  python: 3.7 
-			commands:
-			  - echo "Installing phase"
-		  build:
-			commands:
-			  - echo "Starting SAM packaging `date` in `pwd`"
-			  - aws cloudformation package --template-file samtemplate.yaml --output-template-file packagedcloudformationtemplate.yaml
-			
+version: 0.2
+phases:
+  install:
+    runtime-versions:
+      python: 3.7 
+    commands:
+      - echo "Installing phase"
+  build:
+    commands:
+      - echo "Starting SAM packaging `date` in `pwd`"
+      - aws cloudformation package --template-file samtemplate.yaml --s3-bucket demolalit --output-template-file packagedcloudformationtemplate.yaml
+      - aws cloudformation deploy --template-file packagedcloudformationtemplate.yaml --stack-name demo --capabilities CAPABILITY_IAM
 		
 # lambdademofunction.py is the python3.7 source code
 create file: lambdademofunction.py
 
-		import json
+import json
 
-		def lambda_handler(event, context):
-			# TODO implement
-			return {
-				'statusCode': 200,
-				'body': json.dumps('Hello from Lalit')
-			}
-
-			
+def lambda_handler(event, context):
+	# TODO implement
+	return {
+		'statusCode': 200,
+		'body': json.dumps('Hello from Lalit')
+	}
+		
 # Source Code repository
 using browser on your laptop login to github.com: https://github.com/Lalitduggal
 create public git repo: demo
@@ -100,7 +99,7 @@ aws configure
 
 IAM user: demouser
 access: AKIATNG2U5D66OSF7NUP
-secret: YT9C2IMiSITdZCupuDbPJo7/T7md7MFdF06IJHBC
+secret: YT9C2IMiSITdZCupuDbPJo7T7md7MFdF06IJHBC
 default region: us-east-1
 default output format: json
 
@@ -146,9 +145,7 @@ region: us-east-1
 project name of codebuild: demobuild
 deploy provider: skip
 
-
 # perform a test to check whether the code pipeline gets triggered as soon as you change the lambda function code in git repo and commit.
-
 
 # codepipeline is getting triggered because of the commit to git repo: demo 
 # check api result after 2 minutes
