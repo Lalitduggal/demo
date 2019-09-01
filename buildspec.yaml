@@ -1,0 +1,11 @@
+version: 0.2
+phases:
+  install:
+    runtime-versions:
+      python: 3.7 
+    commands:
+      - echo "Installing phase"
+  build:
+    commands:
+      - echo "Starting SAM packaging `date` in `pwd`"
+      - aws cloudformation package --template-file samtemplate.yaml --s3-bucket demolalit --output-template-file packagedcloudformationtemplate.yaml
