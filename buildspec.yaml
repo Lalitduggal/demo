@@ -9,3 +9,4 @@ phases:
     commands:
       - echo "Starting SAM packaging `date` in `pwd`"
       - aws cloudformation package --template-file samtemplate.yaml --s3-bucket demolalit --output-template-file packagedcloudformationtemplate.yaml
+      - aws cloudformation deploy --template-file packagedcloudformationtemplate.yaml --s3-bucket demolalit --stack-name demo --capabilities CAPABILITY_IAM
