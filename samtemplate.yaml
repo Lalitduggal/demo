@@ -13,7 +13,7 @@ Resources:
         called when a HTTP request is made to the API Gateway endpoint.
       Handler: lambdademofunction.lambda_handler
       Runtime: python3.7
-      CodeUri: './lambdademofunction/py'
+      CodeUri: './lambdademofunction.py'
       Events:
         foneapi:
             # Define an API Gateway endpoint that responds to HTTP GET at /hello
